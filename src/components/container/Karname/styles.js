@@ -55,6 +55,7 @@ export const styles = StyleSheet.create({
     },
     pageTitle:{
         flex: 0.3,
+        paddingVertical: width * 0.05,
         textAlign: 'center',
         alignItems: 'center',
         justifyContent: 'center',
@@ -109,11 +110,29 @@ export const styles = StyleSheet.create({
         backgroundColor: '#1D2437',
         borderRadius: 10,
         elevation: 8,
+        justifyContent:'space-between',
+        paddingHorizontal: 10,
     },
     listHeaderItem:{
-        flex: 0.3,
+        flex:0.25,
+      paddingVertical:7,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    listTitle:{
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor: '#1D2437',
+        borderRadius: 10,
+        marginBottom: 15,
+        marginTop: 15,
+        paddingVertical: 10,
+    },
+    listTitleText:{
+        color:'white',
+        textAlign:'center',
+        fontFamily: 'IRANSans(FaNum)',
+        fontSize: width * 0.038 ,
     },
     listHeaderRight:{
         flex: 0.1,
@@ -123,11 +142,12 @@ export const styles = StyleSheet.create({
     },
     listHeaderItemText:{
         color: 'rgba(255,255,255,0.8)',
-        fontSize: width * 0.035 ,
+        fontSize: width * 0.032 ,
         textAlign: 'center',
         fontFamily: 'IRANSans(FaNum)',
     },
     listItem:{
+      
       marginTop: 15,
       height: 0.1 * height,
       flexDirection: 'row',
@@ -135,7 +155,7 @@ export const styles = StyleSheet.create({
     listLeft:{
         borderRadius: 10,
         backgroundColor: '#1D2437', 
-        flex: 0.9,
+        flex: 1,
         flexDirection: 'row',
         height: '100%',
         elevation: 8,
@@ -145,7 +165,7 @@ export const styles = StyleSheet.create({
         maxHeight: height*0.8,
     },
     listItemSec:{
-        flex: 0.3333,
+        flex: 0.25,
         textAlign: 'center',
         alignItems: 'center',
         justifyContent: 'center',
@@ -155,11 +175,6 @@ export const styles = StyleSheet.create({
         fontSize: width * 0.035 ,
         textAlign: 'center',
         fontFamily: 'IRANSans(FaNum)',
-    },
-    listRight:{
-        flex:0.1,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     approved:{
         height: 0.02 * height,

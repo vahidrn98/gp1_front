@@ -19,13 +19,14 @@ export const styles = StyleSheet.create({
         // borderColor: 'white',
     },
     backButton:{
-        flex: 0.16666,
-        // alignItems: 'center',
+        width:0.48*width,
+        height:0.48*width,
+        alignItems: 'center',
         justifyContent: 'center',
     },
     backIcon:{
-        width: '35%',
-        height: '35%',
+        width:0.48*width,
+        height:0.48*width,
     },
     profileName:{
         flex: 0.6,
@@ -36,7 +37,7 @@ export const styles = StyleSheet.create({
     },
     profileNameText:{
         color: 'white',
-        fontSize: width * 0.045,
+        fontSize: width * 0.053,
         fontFamily: 'IRANSans(FaNum)',
     },
     nameMask:{
@@ -47,8 +48,8 @@ export const styles = StyleSheet.create({
     },
     profilePicContainer:{
         // margin: 'auto',
-        width: width * 0.1666,
-        height: width * 0.1666,
+        width: width * 0.17,
+        height: width * 0.17,
         borderRadius: width * 0.888,
         overflow: 'hidden',
         // transform:[{scale:2}],
@@ -66,12 +67,12 @@ export const styles = StyleSheet.create({
     },
     pageTitleText:{
         color: 'white',
-        fontSize: width * 0.05,
+        fontSize: width * 0.06,
         textAlign: 'center',
         fontFamily: 'IRANSans(FaNum)',
     },
     pageTitleSub:{
-        color: 'rgba(255,255,255,0.7)',
+        color: 'rgba(255,255,255,0.8)',
         fontSize: width * 0.04,
         textAlign: 'center',
         fontFamily: 'IRANSans(FaNum)',
@@ -83,6 +84,7 @@ export const styles = StyleSheet.create({
         marginRight: width*0.05,
         paddingHorizontal: width*0.03,
         alignItems:'center',
+        justifyContent:'center',
     },
     hlistText:{
         fontSize: width * 0.04,
@@ -133,7 +135,7 @@ export const styles = StyleSheet.create({
         flex: 0.5,
     },
     pageDetailsItemText:{
-        color: 'rgba(255,255,255,0.7)',
+        color: 'rgba(255,255,255,0.8)',
         fontSize: width * 0.038 ,
         fontFamily: 'IRANSans(FaNum)',
         textAlign: 'center',

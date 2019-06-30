@@ -175,6 +175,9 @@ export default class Home extends Component {
     if(id==3){
       Actions.coursedetails();
     }
+    if(id==4){
+      Actions.karname();
+    }
   }
 
   render() {

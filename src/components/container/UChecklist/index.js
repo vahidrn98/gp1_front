@@ -1,44 +1,84 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text , Image , FlatList , Dimensions , Animated , Easing , TouchableOpacity , TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, View, Text, Image, FlatList, Dimensions, Animated, Easing, TouchableOpacity, TouchableWithoutFeedback, Alert, AsyncStorage, ScrollView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Overlay } from 'react-native-router-flux';
-import {styles} from './styles';
+import { styles } from './styles';
 import { Actions } from 'react-native-router-flux';
+import axios from 'axios';
 
 
-const {width , height} = Dimensions.get('window')
-export default class Pchecklist extends Component{
+const { width, height } = Dimensions.get('window')
+export default class Pchecklist extends Component {
 
-    constructor(){
+    constructor() {
         super();
-    }
+        this.state = {
+            userDetail: [],
+            coursesDetail: [],
+        }
 
-    render(){
-        const items = [
-            { name: 'آز مدار های الکتریکی', unit: 1,approved:true , id : 2104546  },
-        ];
-        return(
+    }
+    getUserDetail = async () => {
+        let token = await AsyncStorage.getItem("token")
+        let headers = {
+            "Authorization": `Token ${token}`
+        }
+        axios.get("http://theprojects.ir/api/v1/carrier/mini_profile", { headers: headers })
+            .then(async (res) => {
+                await this.setState({
+                    userDetail: res.data[0]
+                })
+            })
+            .catch((err) => {
+                Alert.alert(err)
+            })
+    }
+    getCoursesDetail = async () => {
+        let token = await AsyncStorage.getItem("token")
+        let headers = {
+            "Authorization": `Token ${token}`
+        }
+        axios.get("http://theprojects.ir/api/v1/carrier/terms/preregistration/3/", { headers: headers })
+            .then(async (response) => {
+                await this.setState({
+                    coursesDetail: response.data[0]
+                })
+                // console.log(response.data[0])
+                //Alert.alert(response.data[0])
+            })
+            .catch((err) => {
+                Alert.alert(err)
+            })
+    }
+    componentWillMount() {
+        this.getUserDetail();
+        this.getCoursesDetail();
+        console.log(this.state.userDetail);
+    }
+    render() {
+        return (
+           
             <View style={styles.body}>
                 <View style={styles.topBar}>
                     <View style={styles.backButton}>
-                        <Image style={styles.backIcon} source={require('../../../assests/image/back.png')}/>
+                        <Image style={styles.backIcon} source={require('../../../assests/image/back.png')} />
                     </View>
                     <View style={styles.profileName}>
-                        <Text style={styles.profileNameText}>وحید رضا نیازمند</Text>
+                        <Text style={styles.profileNameText}>سینا عظیمی</Text>
                     </View>
                     <View style={styles.nameMask}>
                         <View style={styles.profilePicContainer}>
-                            <Image style={styles.profilePic} source={require('../../../assests/image/profile.jpg')}/>
+                            <Image style={styles.profilePic} source={require('../../../assests/image/profile.jpg')} />
                         </View>
                     </View>
                 </View>
                 <View style={styles.pageTitle}>
-                    <Text style={styles.pageTitleText}>چک لیست انتخاب واحد</Text>
+                    <Text style={styles.pageTitleText}>چک لیست ثبت نام مقدماتی</Text>
                 </View>
                 <View style={styles.pageDetails}>
                     <View style={styles.pageDetailsRow}>
                         <View style={styles.pageDetailsItem}>
-                            <View style={styles.DetailsItem}><Text style={styles.pageDetailsItemText}>9532291</Text></View>
+                            <View style={styles.DetailsItem}><Text style={styles.pageDetailsItemText}>{this.state.userDetail.id}</Text></View>
                             <View style={styles.DetailsItem}><Text style={styles.pageDetailsItemText}>شماره</Text></View>
                         </View>
                         <View style={styles.pageDetailsItem}>
@@ -48,11 +88,11 @@ export default class Pchecklist extends Component{
                     </View>
                     <View style={styles.pageDetailsRow}>
                         <View style={styles.pageDetailsItem}>
-                            <View style={styles.DetailsItem}><Text style={styles.pageDetailsItemText}>کارشناسی</Text></View>
+                            <View style={styles.DetailsItem}><Text style={styles.pageDetailsItemText}>{this.state.userDetail.degree_type}</Text></View>
                             <View style={styles.DetailsItem}><Text style={styles.pageDetailsItemText}>مقطع</Text></View>
                         </View>
                         <View style={styles.pageDetailsItem}>
-                            <View style={styles.DetailsItem}><Text style={styles.pageDetailsItemText}>نوبت اول</Text></View>
+                            <View style={styles.DetailsItem}><Text style={styles.pageDetailsItemText}>{this.state.userDetail.admission_type}</Text></View>
                             <View style={styles.DetailsItem}><Text style={styles.pageDetailsItemText}>پذیرش</Text></View>
                         </View>
                     </View>
@@ -67,26 +107,30 @@ export default class Pchecklist extends Component{
                     <View style={styles.listHeaderItem}><Text style={styles.listHeaderItemText}>نام درس</Text></View>
                     <View style={styles.listHeaderRight}><Text style={styles.listHeaderItemText}>تایید</Text></View>
                 </View>
-                <FlatList
-                    style={styles.list}
-                    showsVerticalScrollIndicator={false} 
-                    data={items}
-                    renderItem={({item})=>(
-                        <TouchableWithoutFeedback>
-                            <View style={styles.listItem}>
-                                <View style={styles.listLeft}>
-                                    <View style={styles.listItemSec}><Text style={styles.listItemSecText}>{item.id}</Text></View>
-                                    <View style={styles.listItemSec}><Text style={styles.listItemSecText}>{item.unit}</Text></View>
-                                    <View style={styles.listItemSec}><Text style={styles.listItemSecText}>{item.name}</Text></View>
+
+                <View styles={styles.list}>
+                    <FlatList
+                        style={styles.list}
+                        showsVerticalScrollIndicator={false}
+                        data={this.state.coursesDetail}
+                        renderItem={({ item }) => (
+                            <TouchableWithoutFeedback>
+                                <View style={styles.listItem}>
+                                    <View style={styles.listLeft}>
+                                        <View style={styles.listItemSec}><Text style={styles.listItemSecText}>{item.field_course.serial_number}</Text></View>
+                                        <View style={styles.listItemSec}><Text style={styles.listItemSecText}>{item.field_course.credit}</Text></View>
+                                        <View style={styles.listItemSec}><Text style={styles.listItemSecText}>{item.field_course.title}</Text></View>
+                                    </View>
+                                    <View style={styles.listRight}>
+                                        <View style={styles.approved}></View>
+                                    </View>
                                 </View>
-                                <View style={styles.listRight}>
-                                    <View style={styles.approved}></View>
-                                </View>
-                            </View>    
-                        </TouchableWithoutFeedback>
-                    )}
-                />
-                
+                            </TouchableWithoutFeedback>
+                        )}
+                    />
+                </View>
+
+
             </View>
         );
     }
